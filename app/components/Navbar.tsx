@@ -8,7 +8,7 @@ export const Navbar: React.FC = () => {
 						className="text-2xl font-bold bg-blue-50 px-3 rounded-xl"
 						href="/"
 					>
-						Drishti's Blog
+						Drishti&apos;s Blog
 					</Link>
 				</div>
 			</nav>

@@ -51,7 +51,7 @@ export default function Home() {
 							sign very well)
 						</li>
 						<li className="ml-8">
-							I am 5'4, which may seem short, but that means I am fun-sized.
+							I am 5&apos;4, which may seem short, but that means I am fun-sized.
 						</li>
 						<li className="ml-8">
 							My absolute favorite color is blue but it switches up from time to

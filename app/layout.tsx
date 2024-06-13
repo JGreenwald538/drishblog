@@ -47,7 +47,7 @@ export default function RootLayout({
 						</div>
 					</div>
 					<div className="text-center">
-						© {new Date().getFullYear()} Drishti's Blog. All rights reserved.
+						© {new Date().getFullYear()} Drishti&apos;s Blog. All rights reserved.
 					</div>
 					<div className="text-center pb-4">
 						Developed by{" "}
