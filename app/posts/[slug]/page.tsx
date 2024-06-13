@@ -1,4 +1,5 @@
 import { addView, getPost } from "@/app/lib/posts";
+import Image from "next/image";
 
 export default async function Page({ params }: { params: {slug: string}}) {
 
@@ -24,7 +25,7 @@ export default async function Page({ params }: { params: {slug: string}}) {
 			<div className="w-full justify-center flex">
 				<div className="flex justify-center flex-col items-center max-w-fit">
 					<p className="text-right w-full pt-3">{DATE}</p>
-					<img src={image} alt="Uploaded" className="max-w-xs pb-6 pt-3" />
+					<Image src={image} alt="Uploaded" className="max-w-xs pb-6 pt-3" />
 				</div>
 			</div>
 			{/* <p className="pb-10 md:px-36 px-12 font-light">{description}</p> */}
