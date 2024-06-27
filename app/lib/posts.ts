@@ -20,13 +20,17 @@ export interface Post {
   author: string
   views: number
   image: string
+  published: number
 }
 
 export const getPosts = async () => {
+  console.log('getPosts');
   try {
     const result = await client.execute("SELECT * FROM pages");
     const pages = result.toJSON();
-    return convertToObjects(pages) as Post[];
+    const posts = convertToObjects(pages) as Post[];
+    
+    return posts.filter((post) => post.published === 1);
   } catch (error) {
     console.error("Failed to fetch posts", error);
     throw error;

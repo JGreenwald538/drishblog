@@ -24,6 +24,8 @@ export default function Home() {
 		fetchPosts();
 	}, []);
 
+	console.log(posts);
+
 	const postsSorted = [...posts].sort((a, b) => {
 		return new Date(b.DATE).getTime() - new Date(a.DATE).getTime();
 	});
