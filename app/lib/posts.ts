@@ -19,16 +19,16 @@ export interface Post {
   description: string
   author: string
   views: number
-  image: string
+  images: string
   published: number
 }
 
 export const getPosts = async () => {
-  console.log('getPosts');
   try {
     const result = await client.execute("SELECT * FROM pages");
     const pages = result.toJSON();
     const posts = convertToObjects(pages) as Post[];
+    console.log(posts[0].title);
     
     return posts.filter((post) => post.published === 1);
   } catch (error) {
@@ -40,7 +40,9 @@ export const getPosts = async () => {
 export async function getPost(slug: string) {
   try {
     const posts = await getPosts();
+    // console.log(posts);
     const post = posts.find((post) => post.title === slug);
+    
     if (!post) {
       console.error(`No post found with slug: ${slug}`);
     }
@@ -58,7 +60,7 @@ export async function addView(slug: string) {
     const post = posts.find((post) => post.title === slug);
 
     if (!post) {
-      console.error(`Post not found for slug: ${slug}`);
+      console.error(`Post not found for slug(views): ${slug}`);
       return;
     }
 

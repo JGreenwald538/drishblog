@@ -1,5 +1,7 @@
 import { addView, getPost } from "@/app/lib/posts";
 import Image from "next/image";
+import "./css/embla.css"
+import Gallery from "./components/Gallery";
 
 export default async function Page({ params }: { params: {slug: string}}) {
 
@@ -11,9 +13,8 @@ export default async function Page({ params }: { params: {slug: string}}) {
 	}
 
 	await addView(params.slug)
-	
 
-	const {body, title, DATE, author, description, image} = post
+	const {body, title, DATE, author, description, images} = post
 	return (
 		<div className="min-h-screen">
 			<h1 className="md:text-6xl text-4xl font-bold text-center mt-4">
@@ -25,7 +26,7 @@ export default async function Page({ params }: { params: {slug: string}}) {
 			<div className="w-full justify-center flex">
 				<div className="flex justify-center flex-col items-center max-w-fit">
 					<p className="text-right w-full pt-3">{DATE}</p>
-					<Image src={image} alt="Uploaded" className="max-w-xs pb-6 pt-3" />
+					<Gallery image={images}/>
 				</div>
 			</div>
 			{/* <p className="pb-10 md:px-36 px-12 font-light">{description}</p> */}
