@@ -1,0 +1,9 @@
+li {
+    list-style: circle outside url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Ccircle cx='4' cy='4' r='3' fill='black'/%3E%3C/svg%3E") !important;
+    margin-top: .5rem;
+    margin-left: 2rem;
+}
+
+ul {
+    margin-bottom: .5rem;
+}

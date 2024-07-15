@@ -1,18 +1,19 @@
-import { addView, getPost } from "@/app/lib/posts";
+import { addView, getPost } from "../../lib/posts";
 import Image from "next/image";
 import "./css/embla.css"
 import Gallery from "./components/Gallery";
 
 export default async function Page({ params }: { params: {slug: string}}) {
+	const slug = params.slug.replace("%20", " ")
 
-	const post = await getPost(params.slug)
+	const post = await getPost(slug)
 	if (!post) {
 		return (
 			<div></div>
 		)
 	}
 
-	await addView(params.slug)
+	await addView(slug)
 
 	const {body, title, DATE, author, description, images} = post
 	return (
@@ -20,9 +21,9 @@ export default async function Page({ params }: { params: {slug: string}}) {
 			<h1 className="md:text-6xl text-4xl font-bold text-center mt-4">
 				{title}
 			</h1>
-			<h2 className="md:text-xl text-lg font-semibold text-center md:mt-5 mt-2">
+			{title != "Post Not Found" && body && author && images && <h2 className="md:text-xl text-lg font-semibold text-center md:mt-5 mt-2">
 				{"By: " + author}
-			</h2>
+			</h2>}
 			<div className="w-full justify-center flex">
 				<div className="flex justify-center flex-col items-center max-w-fit">
 					<p className="text-right w-full pt-3">{DATE}</p>

@@ -1,9 +1,5 @@
 "use server"
 
-import matter from 'gray-matter'
-import path from 'path'
-import fs from 'fs/promises'
-import { cache } from 'react'
 import { createClient } from "@libsql/client";
 
 const client = createClient({
@@ -24,34 +20,25 @@ export interface Post {
 }
 
 export const getPosts = async () => {
-  try {
-    const result = await client.execute("SELECT * FROM pages");
-    const pages = result.toJSON();
-    const posts = convertToObjects(pages) as Post[];
-    console.log(posts[0].title);
-    
-    return posts.filter((post) => post.published === 1);
-  } catch (error) {
-    console.error("Failed to fetch posts", error);
-    throw error;
-  }
+try {
+  const result = await client.execute("SELECT * FROM pages");
+  const pages = result.toJSON();
+  const posts = convertToObjects(pages) as Post[];
+  console.log(posts);
+  console.log(await client.execute("SELECT * FROM pages"));
+  return posts
+} catch (error) {
+  console.error("Failed to fetch posts", error);
+  throw error;
+}
 };
 
 export async function getPost(slug: string) {
-  try {
-    const posts = await getPosts();
-    // console.log(posts);
-    const post = posts.find((post) => post.title === slug);
-    
-    if (!post) {
-      console.error(`No post found with slug: ${slug}`);
-    }
-    // await addView(slug);
-    return post;
-  } catch (error) {
-    console.error(`Failed to get post for slug: ${slug}`, error);
-    throw error;
-  }
+  console.log(slug);
+  const result = await client.execute({sql:"SELECT * FROM pages where title = ?", args:[slug]});
+  const page = result.toJSON();
+  const posts = convertToObjects(page) as Post[];
+  return posts[0] || { id: 0, title: "Post Not Found", author: "", DATE: "", description: "", body: "", images: "", published: 0 };
 }
 
 export async function addView(slug: string) {
@@ -67,7 +54,7 @@ export async function addView(slug: string) {
     const newViews = post.views + 1;
 
     // Log the SQL statement and arguments for debugging
-    await client.execute("UPDATE pages SET views = 2 WHERE id = 8;");
+    await client.execute({sql:"UPDATE pages SET views = ? WHERE id = ?;", args: [newViews, post.id]});
 
     // // Log the result for debugging
     // console.log(`SQL update result:`, result);
@@ -83,17 +70,6 @@ export async function addView(slug: string) {
     throw new Error(`Failed to add view for slug: ${slug}`);
   }
 }
-async function testAddView() {
-  const slug = 'pwojrgpoefop'; // Replace with a valid slug for testing
-  try {
-    await addView(slug);
-    console.log('View count updated successfully.');
-  } catch (error) {
-    console.error('Error updating view count:', error);
-  }
-}
-
-testAddView();
 
 
 type Result = {

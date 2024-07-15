@@ -22,7 +22,6 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
 	const { selectedIndex, scrollSnaps, onDotButtonClick } =
 		useDotButton(emblaApi);
 
-	console.log(image);
 
 	if (!image) {
 		return <div></div>;
@@ -31,7 +30,6 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
 	images = images.filter((img: string) => {
 		return img !== ""
 	});
-	console.log(images);
 	images = images.map((img: string, index: number) => (
 		<Image
 			src={img}
