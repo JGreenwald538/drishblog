@@ -24,8 +24,6 @@ try {
   const result = await client.execute("SELECT * FROM pages");
   const pages = result.toJSON();
   const posts = convertToObjects(pages) as Post[];
-  console.log(posts);
-  console.log(await client.execute("SELECT * FROM pages"));
   return posts
 } catch (error) {
   console.error("Failed to fetch posts", error);
@@ -34,7 +32,6 @@ try {
 };
 
 export async function getPost(slug: string) {
-  console.log(slug);
   const result = await client.execute({sql:"SELECT * FROM pages where title = ?", args:[slug]});
   const page = result.toJSON();
   const posts = convertToObjects(page) as Post[];
