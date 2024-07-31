@@ -24,7 +24,7 @@ try {
   const result = await client.execute("SELECT * FROM pages");
   const pages = result.toJSON();
   const posts = convertToObjects(pages) as Post[];
-  return posts
+  return posts.filter((post) => post.published === 1);
 } catch (error) {
   console.error("Failed to fetch posts", error);
   throw error;
