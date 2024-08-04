@@ -32,14 +32,13 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
 		return img !== ""
 	});
 	images = images.map((img: string, index: number) => (
-		<div>
+		<div key={index}>
 			<p className="text-right w-full pt-3">{DATE}</p>
 			<Image
 				src={img}
 				alt={index.toString()}
 				width={500}
 				height={500}
-				key={index}
 			/>
 		</div>
 	));

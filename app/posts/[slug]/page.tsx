@@ -6,6 +6,8 @@ import Gallery from "./components/Gallery";
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
 
+import "./post.css"
+
 export default async function Page({ params }: { params: {slug: string}}) {
 	const slug = params.slug.replace("%20", " ")
 
