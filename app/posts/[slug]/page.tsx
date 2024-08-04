@@ -3,6 +3,9 @@ import Image from "next/image";
 import "./css/embla.css"
 import Gallery from "./components/Gallery";
 
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
+
 export default async function Page({ params }: { params: {slug: string}}) {
 	const slug = params.slug.replace("%20", " ")
 
