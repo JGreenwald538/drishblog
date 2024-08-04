@@ -29,8 +29,7 @@ export default async function Page({ params }: { params: {slug: string}}) {
 			</h2>}
 			<div className="w-full justify-center flex">
 				<div className="flex justify-center flex-col items-center max-w-fit">
-					<p className="text-right w-full pt-3">{DATE}</p>
-					<Gallery image={images}/>
+					<Gallery image={images} DATE={DATE}/>
 				</div>
 			</div>
 			{/* <p className="pb-10 md:px-36 px-12 font-light">{description}</p> */}

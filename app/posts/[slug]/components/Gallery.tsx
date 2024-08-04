@@ -10,13 +10,14 @@ import { ReactNode } from "react";
 type PropType = {
 	image: string;
 	options?: EmblaOptionsType;
+	DATE: string;
 };
 
 
 
 
 const EmblaCarousel: React.FC<PropType> = (props) => {
-	const {image, options } = props;
+	const {image, options, DATE } = props;
 	const [emblaRef, emblaApi] = useEmblaCarousel(options);
 
 	const { selectedIndex, scrollSnaps, onDotButtonClick } =
@@ -31,13 +32,16 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
 		return img !== ""
 	});
 	images = images.map((img: string, index: number) => (
-		<Image
-			src={img}
-			alt={index.toString()}
-			width={500}
-			height={500}
-			key={index}
-		/>
+		<div>
+			<p className="text-right w-full pt-3">{DATE}</p>
+			<Image
+				src={img}
+				alt={index.toString()}
+				width={500}
+				height={500}
+				key={index}
+			/>
+		</div>
 	));
 	
 
