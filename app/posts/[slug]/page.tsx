@@ -9,7 +9,7 @@ export const fetchCache = "force-no-store";
 import "./post.css"
 
 export default async function Page({ params }: { params: {slug: string}}) {
-	const slug = params.slug.replace("%20", " ")
+	const slug = params.slug.replaceAll("%20", " ")
 
 	const post = await getPost(slug)
 	if (!post) {
