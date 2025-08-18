@@ -131,7 +131,7 @@ export default function Home() {
 						<li className="ml-8">
 							I have so many favorite books and can never choose but a staple
 							that I will always recommend even though I read it in Middle
-							School is "The Girl I Used to Be"
+							School is &quot;The Girl I Used to Be&quot;
 						</li>
 						<li className="ml-8">
 							Some things I like to do are... go to coffee shops, read, listen
