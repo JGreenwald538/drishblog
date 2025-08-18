@@ -31,6 +31,6 @@
 		"app/post/[id].js",
 		"app/lib/posts.ts",
 		"app/components/layout.js"
-	],
+, "app/lib/test-db.js"	],
 	"exclude": ["node_modules"]
 }

@@ -1,35 +1,87 @@
+// app/page.tsx
 "use client";
 
 import { useEffect, useState } from "react";
 import { PostSummary } from "./components/PostSummary";
-import { getPosts, Post } from "./lib/posts";
 import EmblaCarousel from "./components/Gallery";
 import { EmblaOptionsType } from "embla-carousel";
-// import "./css/base.css";
-// import "./css/sandbox.css";
 import "./css/embla.css";
 
 const OPTIONS: EmblaOptionsType = {};
 const SLIDE_COUNT = 5;
 const SLIDES = Array.from(Array(SLIDE_COUNT).keys());
 
+// Define the Post interface here or import from a shared types file
+interface Post {
+	id: number;
+	title: string;
+	DATE: string;
+	body: string;
+	description: string;
+	author: string;
+	views: number;
+	images: string;
+	published: number;
+}
+
 export default function Home() {
 	const [posts, setPosts] = useState<Post[]>([]);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
 		const fetchPosts = async () => {
-			const posts = await getPosts();
-			setPosts(posts);
+			try {
+				console.log("Fetching posts from API...");
+				const response = await fetch("/api/posts");
+
+				if (!response.ok) {
+					const errorData = await response.json();
+					throw new Error(errorData.details || "Failed to fetch posts");
+				}
+
+				const data = await response.json();
+				console.log(`Received ${data.length} posts`);
+				setPosts(data);
+			} catch (error: any) {
+				console.error("Failed to fetch posts:", error);
+				setError(error.message);
+			} finally {
+				setLoading(false);
+			}
 		};
+
 		fetchPosts();
 	}, []);
 
 	const postsSorted = [...posts].sort((a, b) => {
 		return new Date(b.DATE).getTime() - new Date(a.DATE).getTime();
 	});
+
 	const postsPopular = [...posts].sort((a, b) => {
 		return b.views - a.views;
 	});
+
+	// Show loading state
+	if (loading) {
+		return (
+			<div className="min-h-screen flex items-center justify-center">
+				<div className="text-2xl">Loading posts...</div>
+			</div>
+		);
+	}
+
+	// Show error state
+	if (error) {
+		return (
+			<div className="min-h-screen flex items-center justify-center">
+				<div className="text-red-500">
+					<p className="text-2xl mb-2">Failed to load posts</p>
+					<p className="text-sm">{error}</p>
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		<div>
@@ -51,7 +103,8 @@ export default function Home() {
 							sign very well)
 						</li>
 						<li className="ml-8">
-							I am 5&apos;4, which may seem short, but that means I am fun-sized.
+							I am 5&apos;4, which may seem short, but that means I am
+							fun-sized.
 						</li>
 						<li className="ml-8">
 							My absolute favorite color is blue but it switches up from time to
@@ -78,7 +131,7 @@ export default function Home() {
 						<li className="ml-8">
 							I have so many favorite books and can never choose but a staple
 							that I will always recommend even though I read it in Middle
-							School is “The Girl I Used to Be”
+							School is "The Girl I Used to Be"
 						</li>
 						<li className="ml-8">
 							Some things I like to do are... go to coffee shops, read, listen
@@ -99,27 +152,35 @@ export default function Home() {
 							<div className="text-center font-semibold text-2xl mb-4">
 								Recent
 							</div>
-							{postsSorted.map((post) => (
-								<PostSummary
-									key={post.id}
-									title={post.title}
-									date={post.DATE}
-									description={post.description}
-								/>
-							))}
+							{posts.length === 0 ? (
+								<p className="text-center text-gray-500">No posts yet</p>
+							) : (
+								postsSorted.map((post) => (
+									<PostSummary
+										key={post.id}
+										title={post.title}
+										date={post.DATE}
+										description={post.description}
+									/>
+								))
+							)}
 						</div>
 						<div>
 							<div className="text-center font-semibold text-2xl mb-4">
 								Popular
 							</div>
-							{postsPopular.map((post) => (
-								<PostSummary
-									key={post.id}
-									title={post.title}
-									date={post.DATE}
-									description={post.description}
-								/>
-							))}
+							{posts.length === 0 ? (
+								<p className="text-center text-gray-500">No posts yet</p>
+							) : (
+								postsPopular.map((post) => (
+									<PostSummary
+										key={post.id}
+										title={post.title}
+										date={post.DATE}
+										description={post.description}
+									/>
+								))
+							)}
 						</div>
 					</div>
 				</div>
